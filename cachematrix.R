@@ -1,15 +1,28 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## First I will create a list that will keep information about the inverted matrix
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    i <- NULL
+    set <- function(y) {
+        x <<- y
+        i <<- NULL
+    }
+    get <- function() x
+    seti <- function(solve) i <<- solve
+    geti <- function() i
+    list(set = set, get = get, seti = seti, geti = geti)
 }
 
 
-## Write a short comment describing this function
+## In the below function I will invert the matrix or read it from cache
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    i <-x$geti()
+    if(!is.null(i)) {
+      message("getting cached data")
+      return(i)
+    }
+    data <- x$get()
+    i <- solve(data, ...)
+    x$seti(i)
+    i
 }
